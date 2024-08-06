@@ -3,21 +3,18 @@ import React from "react";
 import { useEffect, useState, useRef } from "react";
 import { themeChange } from "theme-change";
 
-const ThemeToggler = () => {
-  const [theme, setTheme] = useState(
-    getLocalStorage()
-    //localStorage.getItem("theme") ? localStorage.getItem("theme") : "dark"
-  );
-  function getLocalStorage() {
-    if (localStorage.getItem("theme")) {
-      return localStorage.getItem("theme");
-    } else {
-      return "dark";
-    }
+const getLocalStorage = () => {
+  if (global.window !== undefined) {
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "dark";
   }
+};
+const ThemeToggler = () => {
+  const [theme, setTheme] = useState(getLocalStorage() || "dark");
+
   const handleToggle = (e) => {
-    if (e.target.checked) setTheme("dark");
-    else setTheme("light");
+    if (e.target.checked) {
+      setTheme("dark");
+    } else setTheme("light");
   };
 
   useEffect(() => {
