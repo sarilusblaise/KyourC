@@ -5,20 +5,6 @@ import { themeChange } from "theme-change";
 import { getLocalStorage } from "@/app/utils/getLocalstorage";
 const ThemeToggler = () => {
   const [theme, setTheme] = useState("dark");
-
-  /*const handleToggle = (e) => {
-    if (e.target.checked) {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-  };
-
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-    const localTheme = localStorage.getItem("theme");
-    document.querySelector("html").setAttribute("data-theme", theme);
-  }, [theme]);*/
   useEffect(() => {
     // Code inside useEffect runs only on the client side
     const storedTheme = localStorage.getItem("theme");
@@ -26,7 +12,7 @@ const ThemeToggler = () => {
       setTheme(storedTheme);
     }
     document.querySelector("html").setAttribute("data-theme", theme);
-  }, [theme]); // Empty dependency array means this runs only once on mount
+  }, [theme]); 
 
   const toggleTheme = (e) => {
     const newTheme = e.target.checked ? "dark" : "light";
