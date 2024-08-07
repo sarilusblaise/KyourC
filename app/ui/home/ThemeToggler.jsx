@@ -4,11 +4,9 @@ import { useEffect, useState, useRef } from "react";
 import { themeChange } from "theme-change";
 import { getLocalStorage } from "@/app/utils/getLocalstorage";
 const ThemeToggler = () => {
-  const [theme, setTheme] = useState(
-    () => localStorage.getItem("theme") || "dark"
-  );
+  const [theme, setTheme] = useState("dark");
 
-  const handleToggle = (e) => {
+  /*const handleToggle = (e) => {
     if (e.target.checked) {
       setTheme("dark");
     } else {
@@ -20,7 +18,21 @@ const ThemeToggler = () => {
     localStorage.setItem("theme", theme);
     const localTheme = localStorage.getItem("theme");
     document.querySelector("html").setAttribute("data-theme", theme);
-  }, [theme]);
+  }, [theme]);*/
+  useEffect(() => {
+    // Code inside useEffect runs only on the client side
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme) {
+      setTheme(storedTheme);
+    }
+    document.querySelector("html").setAttribute("data-theme", theme);
+  }, [theme]); // Empty dependency array means this runs only once on mount
+
+  const toggleTheme = (e) => {
+    const newTheme = e.target.checked ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
 
   return (
     <label className="flex cursor-pointer gap-2">
@@ -39,7 +51,7 @@ const ThemeToggler = () => {
         <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
       </svg>
       <input
-        onChange={handleToggle}
+        onChange={toggleTheme}
         type="checkbox"
         value="synthwave"
         className="toggle theme-controller"
