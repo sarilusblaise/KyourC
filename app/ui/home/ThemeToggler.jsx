@@ -2,19 +2,18 @@
 import React from "react";
 import { useEffect, useState, useRef } from "react";
 import { themeChange } from "theme-change";
-
-const getLocalStorage = () => {
-  if (global.window !== undefined) {
-    localStorage.getItem("theme") ? localStorage.getItem("theme") : "dark";
-  }
-};
+import { getLocalStorage } from "@/app/utils/getLocalstorage";
 const ThemeToggler = () => {
-  const [theme, setTheme] = useState(getLocalStorage() || "dark");
+  const [theme, setTheme] = useState(
+    () => localStorage.getItem("theme") || "dark"
+  );
 
   const handleToggle = (e) => {
     if (e.target.checked) {
       setTheme("dark");
-    } else setTheme("light");
+    } else {
+      setTheme("light");
+    }
   };
 
   useEffect(() => {
@@ -22,6 +21,7 @@ const ThemeToggler = () => {
     const localTheme = localStorage.getItem("theme");
     document.querySelector("html").setAttribute("data-theme", theme);
   }, [theme]);
+
   return (
     <label className="flex cursor-pointer gap-2">
       <svg

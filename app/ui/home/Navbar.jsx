@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import ThemeToggler from "./ThemeToggler";
+
 const navLinks = [
   { href: "/quote", label: "quote" },
   { href: "/celebrities", label: "celebrities" },
